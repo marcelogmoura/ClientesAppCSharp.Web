@@ -1,0 +1,43 @@
+<h4>Consulta de Clientes</h4>
+<p>Lista de clientes cadastrados:</p>
+<hr/>
+
+<div class="table-responsive">
+    <table class="table table-sm">  
+        <thead>
+            <tr>
+                <th>cliente</th>
+                <th>cpf</th>
+                <th>e-mail</th>
+                <th>cadastrado</th>
+                <th>última alteração</th>
+                <th>ações</th>
+            </tr>
+            
+        </thead>
+            <tr *ngFor="let c of clientes">
+                <td>{{ c.nome }}</td>
+                <td>{{ c.cpf }}</td>
+                <td>{{ c.email | lowercase }}</td>
+                <td>{{ c.dataInclusao | date : 'dd/MM/yyyy' }}</td>
+                <td>{{ c.dataUltimaAlteracao | date : 'dd/MM/yyyy HH:mm' }}</td>
+                <td></td>
+
+            </tr>
+
+        <tbody>
+
+
+        </tbody>
+
+        <tfoot>
+        <tr>    
+            <td colspan="6">
+                Total: {{ clientes.length}}
+            </td>
+        </tr>
+
+        </tfoot>
+
+     </table>
+</div>
