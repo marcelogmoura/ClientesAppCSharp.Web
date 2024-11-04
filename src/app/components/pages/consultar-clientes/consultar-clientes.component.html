@@ -1,12 +1,28 @@
 <h4>Consulta de Clientes</h4>
-<p>Lista de clientes cadastrados:</p>
+<p>Lista de clientes cadastrados:</p> 
 <hr/>
+
+    <div *ngIf="mensagemSucesso" class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Sucesso ! </strong> {{ mensagemSucesso }}
+        <button (click)="mensagemSucesso = '' " type="button" class="btn-close" aria-label="Close"> </button>
+
+    </div>
+
+    <div class="text-center">
+        <pagination-controls 
+            previousLabel="Anterior"
+            nextLabel="Próxima"
+            (pageChange)="handlePageChange($event)"        
+        />
+        
+        </div>
+
 
 <div class="table-responsive">
     <table class="table table-sm">  
         <thead>
             <tr>
-                <th>cliente</th>
+                <th>cliente</th> 
                 <th>cpf</th>
                 <th>e-mail</th>
                 <th>cadastrado</th>
@@ -15,18 +31,30 @@
             </tr>
             
         </thead>
-            <tr *ngFor="let c of clientes">
-                <td>{{ c.nome }}</td>
-                <td>{{ c.cpf }}</td>
+
+        <tbody>
+            
+                <tr *ngFor="let c of clientes | paginate : { itemsPerPage: 4, currentPage: pagina }">
+                
+                <td>{{ c.nome | capitalize }}</td>
+                <td>{{ c.cpf | mask: '000.000.000-00' }}</td>
                 <td>{{ c.email | lowercase }}</td>
                 <td>{{ c.dataInclusao | date : 'dd/MM/yyyy' }}</td>
                 <td>{{ c.dataUltimaAlteracao | date : 'dd/MM/yyyy HH:mm' }}</td>
-                <td></td>
+                <td>
+                    <button class="btn btn-sm btn-outline-info me-2" 
+                        [routerLink]="['/pages/editar-clientes', c.id]">
+                        editar                        
+                    </button>
+
+                    <button class="btn btn-sm btn-outline-warning" 
+                        (click)="onDelete(c.id)">
+                        excluir
+                    </button>
+
+                </td>
 
             </tr>
-
-        <tbody>
-
 
         </tbody>
 
